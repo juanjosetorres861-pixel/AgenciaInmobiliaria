@@ -4,20 +4,28 @@ Proyecto AgenciaInmobiliaria
 Proyecto realizado por: Juan Jose Torres Rodriguez y Samuel Rodriguez Serrano .
 ---
 ##  Diseño del Sistema (Diagrama UML)
-Para la arquitectura del sistema, diseñamos un diagrama de clases que representa la lógica de la oficina:
+Diseño del Sistema (Diagrama UML)
+Para la arquitectura del sistema, escalamos el diseño a un total de 10 clases que representan la lógica completa de una oficina moderna:
 
-* Clase Abstracta ,Propiedad : Definimos esta clase como abstracta porque representa un concepto general. En la vida real, no se transa una propiedad genérica, sino tipos específicos como casas o locales.
-* Herencia : Las clases Casa, Apartamento y Local heredan de Propiedad, reutilizando atributos comunes (dirección, precio) y añadiendo los suyos propios.
-* Relaciones de Negocio:
-    * Agente - Propiedad: Relación 1 a muchos, donde un agente gestiona un catálogo de inmuebles.
-    * Cliente - Visita: Registra el interés de los usuarios por conocer las propiedades físicamente.
-    * Contrato: La entidad que formaliza la relación legal entre un cliente y un inmueble.
+Clase Padre, Inmueble: Definimos esta clase como la base de la jerarquía. Contiene los atributos comunes como ID de referencia, dirección, precio base y área, además de la lógica para el cálculo de comisiones.
 
-##  Implementación Técnica
-En esta primera fase, nos enfocamos en construir el "cerebro" del sistema en Java:
+Herencia: Las clases Casa, Apartamento, LocalComercial, Lote, Bodega, Oficina, Finca y Consultorio heredan de Inmueble, permitiendo una especialización del catálogo.
 
-1.  Encapsulamiento: Todos los atributos se definieron como private. Implementamos métodos Getters y Setters para controlar el acceso a la información, simulando los permisos de seguridad de una oficina real.
-2.  Organización por Paquetes: 
-     com.inmobiliaria.mode`: Contiene el dominio y las entidades.
-     com.inmobiliaria.main: Contiene la lógica de ejecución y pruebas.
-3.  Abstracciones e Interfaces: Dejamos proyectadas interfaces como Arrendable y Vendible para definir comportamientos específicos en futuras entregas, cumpliendo con la escalabilidad del sistema.
+Relaciones de Negocio:
+
+Vendedor - Inmueble: Relación donde el agente gestiona las propiedades y acumula comisiones por cada venta realizada.
+
+Cliente - Inmueble: Registra los datos del comprador y su presupuesto para validar la viabilidad de la compra.
+
+ContratoVenta: La entidad que formaliza la transacción legal entre el cliente, el vendedor y el inmueble, cambiando el estado de la propiedad a "Vendido".
+
+## Implementación Técnica
+En esta fase avanzada, hemos robustecido el "cerebro" del sistema en Java siguiendo estos principios:
+
+Encapsulamiento: Todos los atributos se definieron como private o protected. Implementamos métodos Getters y Setters para controlar el acceso a la información y proteger los datos financieros.
+
+Polimorfismo y Especialización: Cada clase hija implementa atributos únicos (como distanciaCiudad en Fincas o numVitrinas en Locales), permitiendo que el sistema sea flexible.
+
+Gestión de Estados: El sistema controla el ciclo de vida del inmueble (Disponible, Vendido, Arrendado), asegurando que un inmueble no se venda dos veces.
+
+Organización de Archivos: El proyecto incluye un archivo .gitignore profesional que filtra archivos temporales de Eclipse e IntelliJ, manteniendo el repositorio de GitHub limpio y enfocado exclusivamente en el código fuente.
