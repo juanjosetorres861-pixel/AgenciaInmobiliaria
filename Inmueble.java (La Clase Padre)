@@ -1,0 +1,26 @@
+import java.time.LocalDate;
+
+public class Inmueble {
+    protected String idReferencia;
+    protected String direccion;
+    protected double precioBase;
+    protected double areaMetros;
+    protected String estado; // Disponible, Vendido, Arrendado
+    protected LocalDate fechaRegistro;
+
+    public Inmueble(String id, String dir, double precio, double area) {
+        this.idReferencia = id;
+        this.direccion = dir;
+        this.precioBase = precio;
+        this.areaMetros = area;
+        this.estado = "Disponible";
+        this.fechaRegistro = LocalDate.now();
+    }
+
+    public double calcularComision() {
+        return this.precioBase * 0.03;
+    }
+
+    public void setEstado(String estado) { this.estado = estado; }
+    public String getEstado() { return estado; }
+}
