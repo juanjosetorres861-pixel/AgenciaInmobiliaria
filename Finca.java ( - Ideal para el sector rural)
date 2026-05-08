@@ -1,0 +1,9 @@
+<span class="s0">public </span><span class="s1">Finca(</span><span class="s4">String </span><span class="s1">id, </span><span class="s4">String </span><span class="s1">dir, </span><span class="s4">double </span><span class="s1">pre, </span><span class="s4">double </span><span class="s1">area, </span><span class="s0">double </span><span class="s1">distancia) {</span>
+    <span class="s0">super</span><span class="s1">(id, dir, pre, area);</span>
+    <span class="s0">this</span><span class="s1">.distanciaCiudadKm = distancia;</span>
+<span class="s1">}</span>
+
+<span class="s3">// Lógica: Si está muy lejos, el precio de transporte aumenta</span>
+<span class="s0">public double </span><span class="s1">estimarCostoTransporte() {</span>
+    <span class="s0">return </span><span class="s1">distanciaCiudadKm * </span><span class="s2">2500</span><span class="s1">;</span>
+<span class="s1">}</span>
