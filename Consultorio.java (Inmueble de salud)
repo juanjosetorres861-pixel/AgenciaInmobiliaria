@@ -1,0 +1,8 @@
+<span class="s0">public </span><span class="s1">Consultorio(</span><span class="s4">String </span><span class="s1">id, </span><span class="s4">String </span><span class="s1">dir, </span><span class="s4">double </span><span class="s1">pre, </span><span class="s4">double </span><span class="s1">area) {</span>
+    <span class="s0">super</span><span class="s1">(id, dir, pre, area);</span>
+<span class="s1">}</span>
+
+<span class="s3">// Lógica: Incrementa el valor si cumple normas de salud</span>
+<span class="s0">public double </span><span class="s1">ajustarPrecioNormativa() {</span>
+    <span class="s0">return </span><span class="s1">(cumpleNormaSalud) ? precioBase * </span><span class="s2">1.10 </span><span class="s1">: precioBase;</span>
+}
