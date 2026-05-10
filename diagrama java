@@ -1,0 +1,184 @@
+
+
+// ==========================================
+// 1. SISTEMA DE PRECIOS (BLOQUES MORADOS)
+// ==========================================
+interface CalculadoraPrecio {
+    double calcular(double precioBase, int dias);
+}
+
+class PrecioTemporadaAlta implements CalculadoraPrecio {
+    public double calcular(double p, int d) { return (p * d) * 1.30; }
+}
+
+class PrecioDescuento implements CalculadoraPrecio {
+    public double calcular(double p, int d) { return (p * d) * 0.90; }
+}
+
+class PrecioRegular implements CalculadoraPrecio {
+    public double calcular(double p, int d) { return (p * d); }
+}
+
+// ==========================================
+// 2. JERARQUÍA DE PROPIEDADES (BLOQUES NARANJA Y VERDE)
+// ==========================================
+abstract class Propiedad {
+    protected int id;
+    protected String direccion;
+    protected double precio;
+    protected boolean disponible;
+    protected String ciudad;
+
+    public Propiedad(int id, String direccion, double precio, String ciudad) {
+        this.id = id;
+        this.direccion = direccion;
+        this.precio = precio;
+        this.disponible = true;
+        this.ciudad = ciudad;
+    }
+
+    public abstract String mostrarInformacion();
+}
+
+class Casa extends Propiedad {
+    private int numHabitaciones;
+    private boolean tieneJardin;
+    private int numPisos;
+
+    public Casa(int id, String dir, double pre, String ciu, int hab, boolean jar, int pis) {
+        super(id, dir, pre, ciu);
+        this.numHabitaciones = hab;
+        this.tieneJardin = jar;
+        this.numPisos = pis;
+    }
+
+    @Override
+    public String mostrarInformacion() { return "Casa con " + numHabitaciones + " habitaciones en " + ciudad; }
+}
+
+class Bodega extends Propiedad {
+    private double capacidad;
+    private boolean tieneRefrigeracion;
+
+    public Bodega(int id, String dir, double pre, String ciu, double cap) {
+        super(id, dir, pre, ciu);
+        this.capacidad = cap;
+    }
+
+    @Override
+    public String mostrarInformacion() { return "Bodega de " + capacidad + "m3"; }
+}
+
+class Finca extends Propiedad {
+    private double hectareas;
+    private double distanciaCiudad;
+
+    public Finca(int id, String dir, double pre, String ciu, double hec) {
+        super(id, dir, pre, ciu);
+        this.hectareas = hec;
+    }
+
+    @Override
+    public String mostrarInformacion() { return "Finca de " + hectareas + " hectáreas"; }
+}
+
+class Apartamento extends Propiedad {
+    private int piso;
+    private int estrato;
+
+    public Apartamento(int id, String dir, double pre, String ciu, int piso) {
+        super(id, dir, pre, ciu);
+        this.piso = piso;
+    }
+
+    @Override
+    public String mostrarInformacion() { return "Apartamento en piso " + piso; }
+}
+
+// ==========================================
+// 3. PERSONAL Y CLIENTES (BLOQUES AMARILLOS)
+// ==========================================
+abstract class Empleado {
+    protected int idEmpleado;
+    protected String nombre;
+    protected String email;
+}
+
+class Vendedor extends Empleado {
+    private double comision;
+    private double metaVentas;
+
+    public Vendedor(int id, String nom, double meta) {
+        this.idEmpleado = id;
+        this.nombre = nom;
+        this.metaVentas = meta;
+    }
+
+    public void registrarVenta() { System.out.println("Venta registrada por: " + nombre); }
+}
+
+class Cliente {
+    private int idCliente;
+    private String nombre;
+    private String telefono;
+
+    public Cliente(int id, String nom) {
+        this.idCliente = id;
+        this.nombre = nom;
+    }
+}
+
+// ==========================================
+// 4. GESTIÓN DE CONTRATOS (BLOQUES AZULES)
+// ==========================================
+class ContratoVenta {
+    private int idContrato;
+    private double precioFinal;
+    private String formaPago;
+
+    public ContratoVenta(int id, double precio, String pago) {
+        this.idContrato = id;
+        this.precioFinal = precio;
+        this.formaPago = pago;
+    }
+
+    public void finalizarVenta() {
+        System.out.println("CONTRATO FINALIZADO. Precio: $" + precioFinal + " Pago: " + formaPago);
+    }
+}
+
+class Visita {
+    private int idVisita;
+    private Date fecha;
+    private String estado;
+
+    public void programar() { this.estado = "Programada"; }
+}
+
+// ==========================================
+// 5. CLASE PRINCIPAL (EJECUCIÓN)
+// ==========================================
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("=== SISTEMA INMOBILIARIO POPAYÁN ===");
+
+        // 1. Crear Inmuebles
+        Casa miCasa = new Casa(1, "Centro Histórico", 350000000, "Popayán", 4, true, 2);
+        Apartamento miApto = new Apartamento(2, "Sector Norte", 180000000, "Popayán", 5);
+
+        // 2. Crear Personal y Clientes
+        Vendedor juan = new Vendedor(101, "Juan Jose Torres", 500000000);
+        Cliente samuel = new Cliente(201, "Samuel Rodriguez");
+
+        // 3. Simular Lógica de Precios (Interfaz Calculadora)
+        CalculadoraPrecio promo = new PrecioDescuento();
+        double precioConDescuento = promo.calcular(miCasa.precio, 1);
+
+        // 4. Finalizar un Contrato
+        ContratoVenta contrato = new ContratoVenta(5001, precioConDescuento, "Crédito Bancario");
+        
+        System.out.println("Inmueble: " + miCasa.mostrarInformacion());
+        juan.registrarVenta();
+        contrato.finalizarVenta();
+    }
+}
